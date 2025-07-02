@@ -1,0 +1,70 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Plateforme Multimodale</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/style.css') }}">
+</head>
+<body>
+
+    <!-- En-tête -->
+    <header class="site-header">
+        <div class="container">
+            <h1 class="logo">🔍 Plateforme Multimodale</h1>
+            <p class="tagline">Analyse audio & image intelligente</p>
+        </div>
+    </header>
+
+    <!-- Section upload -->
+    <section class="upload-section">
+        <div class="container">
+            <h2>📂 Choisissez un fichier</h2>
+            <form method="POST" action="/upload" enctype="multipart/form-data">
+                <label for="file">Fichier audio (.mp3/.wav) ou image (.jpg/.png) :</label>
+                <input type="file" id="file" name="file" accept=".mp3, .wav, .jpg, .jpeg, .png" required>
+                <button type="submit">Analyser</button>
+            </form>
+
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <ul class="flash-messages">
+                        {% for message in messages %}
+                            <li>{{ message|safe }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
+        </div>
+    </section>
+
+    <!-- Résultat OpenCV -->
+    {% if image_url_opencv %}
+    <section class="result-section">
+        <div class="container">
+            <h2>🖼️ Résultat OpenCV (visages détectés)</h2>
+            <img src="{{ image_url_opencv }}" alt="Image OpenCV" class="result-image">
+        </div>
+    </section>
+    {% endif %}
+
+    <!-- Résultat Roboflow -->
+    {% if image_url_roboflow %}
+    <section class="result-section">
+        <div class="container">
+            <h2>🤖 Résultat Roboflow (objets détectés)</h2>
+            <img src="{{ image_url_roboflow }}" alt="Image Roboflow" class="result-image">
+        </div>
+    </section>
+    {% endif %}
+
+    <!-- Pied de page -->
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; 2025 - Plateforme Multimodale | Réalisé par KASSI Joseph et DIALLO Mamadou</p>
+        </div>
+    </footer>
+
+</body>
+</html>

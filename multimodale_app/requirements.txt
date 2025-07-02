@@ -1,0 +1,5 @@
+flask
+requests
+python-dotenv
+opencv-python-headless
+werkzeug
